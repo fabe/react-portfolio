@@ -1,0 +1,41 @@
+@import '_normalize.scss';
+
+
+/*
+  Variables
+*/
+$primary:        #3b5576;
+$primary-light:  #7d95b4;
+$sans-serif:     Roboto, sans-serif;
+$content-width:  840px;
+$sidebar-width:  260px;
+
+
+/*
+  Basics
+*/
+body {
+  font-family: $sans-serif;
+  color: $primary;
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: normal;
+}
+
+h2 {
+  font-weight: 500;
+  font-size: inherit;
+  color: $primary-light;
+}
+
+.App {
+  max-width: $content-width;
+  margin: 60px auto;
+}
+
+.Sidebar {
+  width: $sidebar-width;
+  float: left;
+}
