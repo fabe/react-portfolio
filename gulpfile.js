@@ -74,4 +74,5 @@ gulp.task('webserver', function() {
 gulp.task('default', ['images','sass','build','webserver'], function() {
   gulp.watch('sass/**/*', ['sass']);
   gulp.watch('scripts/**/*', ['build']);
+  gulp.watch('data/**/*', ['build']);
 });
