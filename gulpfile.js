@@ -66,7 +66,8 @@ gulp.task('webserver', function() {
     .pipe(webserver({
       livereload: false,
       directoryListing: false,
-      open: false
+      open: false,
+      fallback: 'index.html'
     }));
 });
 

@@ -6,7 +6,13 @@
   "pages": {
     "about": {
       "title": "About",
-      "slug": "about"
+      "slug": "about",
+      "content": "Hey, this is content! **Bold**"
+    },
+    "contact": {
+      "title": "Contact",
+      "slug": "contact",
+      "content": "Hey, this is content! *Italic*"
     }
   }
 }

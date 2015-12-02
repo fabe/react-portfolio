@@ -1,6 +1,12 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var ReactRouter = require('react-router');
+var Router  = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var History = ReactRouter.History;
+var createBrowserHistory = require('history/lib/createBrowserHistory');
+
 var Navigation = React.createClass({
   render: function() {
     var NavigationNodes = Object.keys(this.props.pages).map(function(key) {
@@ -19,8 +25,9 @@ var Navigation = React.createClass({
 });
 
 var NavigationItem = React.createClass({
+  mixins : [History],
   navigate: function(slug) {
-    console.log(slug)
+    this.history.pushState(null, slug);
   },
   render: function() {
     return (
