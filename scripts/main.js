@@ -24,7 +24,8 @@ var App = React.createClass({
           <Sidebar name={ data.site.name }
                    tagline={ data.site.tagline }
                    bio={ data.site.bio }
-                   pages={ data.pages } />
+                   pages={ data.pages }
+                   extra={ this.props.params } />
           { this.props.children || <Work works={ data.works } /> }
         </div>
       )
@@ -46,8 +47,38 @@ var Sidebar = React.createClass({
         <h3>{ this.props.tagline }</h3>
         <p className="bio">{ this.props.bio }</p>
         <Navigation pages={ this.props.pages } />
+        <SidebarInfo extra={ this.props.extra } />
+        <p className="Copyright">Copyright &copy; 2015 Ron Swanson</p>
       </div>
     )
+  }
+});
+
+var SidebarInfo = React.createClass({
+  render: function() {
+    if(this.props.extra.project) {
+      var project = data.works[this.props.extra.project];
+      var html = {
+        __html: marked(project.content)
+      };
+      var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+      var date = monthNames[new Date(project.date).getMonth()];
+      var year = new Date(project.date).getFullYear();
+      return (
+        <div className="SidebarInfo">
+          <h2>{ project.title }</h2>
+          <p dangerouslySetInnerHTML={html} />
+          { project.client ?
+              <h3>Client: { project.client }</h3> :
+              null
+          }
+          <h3>Date: { date + ' ' + year}</h3>
+          <h3>Tags: <Tags tags={ project.tags } /></h3>
+        </div>
+      )
+    } else {
+      return <p></p>;
+    }
   }
 });
 
@@ -115,31 +146,40 @@ var Work = React.createClass({
 
 var WorkItem = React.createClass({
   render: function() {
+    return (
+      <div className="WorkItem">
+        <Link to={ '/work/' + this.props.slug }>
+          <img src={ this.props.image } />
+          <h3>{ this.props.title }</h3>
+        </Link>
+        <Tags tags={ this.props.tags } />
+      </div>
+    )
+  }
+});
+
+var Tags = React.createClass({
+  render: function() {
     var tags = this.props.tags.map(function(item) {
       return <span key={ item }>{ item }</span>
     });
     return (
-      <div className="WorkItem">
-        <Link to={ 'work/' + this.props.slug }>
-          <img src={ this.props.image } />
-          <h3>{ this.props.title }</h3>
-        </Link>
-        <p>{ tags }</p>
+      <div className="Tags">
+        { tags }
       </div>
-    )
+    );
   }
 });
 
 var WorkSingle = React.createClass({
   render: function() {
     var project = data.works[this.props.params.project];
-    var html = {
-      __html: marked(project.content)
-    };
+    var images = project.images.map(function(item, i) {
+      return <img key={ i } src={ item }/>
+    });
     return (
-      <div className="Page">
-        <h2>{ project.title }</h2>
-        <div dangerouslySetInnerHTML={html}></div>
+      <div className="Page WorkSingle">
+        { images }
       </div>
     )
   }
@@ -171,7 +211,7 @@ var Default = React.createClass({
 var routes = (
   <Router history={createBrowserHistory()}>
     <Route path="/" component={App}>
-      <Route path="/work/:project" component={WorkSingle}/>
+      <Route path="/work/:project" component={WorkSingle} handler={Sidebar} />
       <Redirect from="/work" to="/" />
       <Route path="/:page" component={Default}/>
     </Route>

@@ -6,6 +6,7 @@
 */
 $primary:        #3b5576;
 $primary-light:  #7d95b4;
+$border:         #e7edf3;
 $sans-serif:     Roboto, sans-serif;
 $content-width:  840px;
 $sidebar-width:  260px;
@@ -36,10 +37,19 @@ h1 {
     color: inherit;
     text-decoration: none;
   }
+
+  & + h3 {
+    margin-top: 0;
+  }
+}
+
+h2 {
+  @extend h1;
+  font-size: 18px;
 }
 
 h3 {
-  margin-top: 5px;
+  margin-top: 10px;
   font-weight: 500;
   font-size: inherit;
   color: $primary-light;
@@ -58,6 +68,20 @@ h3 {
     margin-top: 30px;
     margin-bottom: 0;
   }
+
+  .SidebarInfo {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid $border;
+
+    .Tags {
+      display: inline-block;
+    }
+
+    h3 {
+      margin: 0;
+    }
+  }
 }
 
 .Navigation {
@@ -74,6 +98,9 @@ h3 {
       text-decoration: none;
 
       &:hover {
+        text-decoration: line-through;
+      }
+      &.active {
         text-decoration: line-through;
       }
     }
@@ -111,14 +138,30 @@ h3 {
     h3 {
       margin-bottom: 0;
     }
+  }
+}
 
-    span {
-      &:after {
-        content: ", ";
-      }
-      &:last-of-type:after {
-        content: "";
-      }
+.WorkSingle {
+  img {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
+
+.Tags {
+  span {
+    &:after {
+      content: ", ";
+    }
+    &:last-of-type:after {
+      content: "";
     }
   }
+}
+
+.Copyright {
+  color: rgba($primary, .3);
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid $border;
 }

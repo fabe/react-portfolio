@@ -20,26 +20,45 @@
     "apple-pie": {
       "title": "Apple Pie",
       "slug": "apple-pie",
-      "content": "This is a project I did for *Apple* Pie in 2014. I focused on the interface design and passed the mockups to an external developer.\n\n![](https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?fit=crop&fm=jpg&h=400&w=800&q=100)",
+      "content": "This is a project I did for *Apple* Pie in 2014. I focused on the interface design and passed the mockups to an external developer.\n\nIt was very fun to work with everybody at Pie!",
       "tags": ["ui", "ux"],
       "date": "12/03/2014",
-      "image": "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?fit=crop&fm=jpg&h=500&w=300&q=100"
+      "client": "Pie",
+      "image": "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?fit=crop&fm=jpg&h=500&w=300&q=100",
+      "images": [
+        "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?fit=crop&fm=jpg&h=500&w=300&q=100",
+        "https://images.unsplash.com/photo-1447014421976-7fec21d26d86?fit=crop&fm=jpg&h=800&q=100",
+        "https://images.unsplash.com/photo-1446426156356-92b664d86b77?fit=crop&fm=jpg&h=800&q=100",
+        "https://images.unsplash.com/photo-1446071103084-c257b5f70672?fit=crop&fm=jpg&h=800&q=100"
+      ]
     },
     "mushroom-risotto": {
       "title": "Mushroom Risotto",
       "slug": "mushroom-risotto",
       "content": "This is a project I did for mushroom-risotto.",
       "tags": ["graphic design"],
-      "date": "19/06/2015",
-      "image": "https://images.unsplash.com/photo-1447014421976-7fec21d26d86?fit=crop&fm=jpg&h=800&q=100"
+      "date": "01/06/2015",
+      "image": "https://images.unsplash.com/photo-1447014421976-7fec21d26d86?fit=crop&fm=jpg&h=800&q=100",
+      "images": [
+        "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?fit=crop&fm=jpg&h=500&w=300&q=100",
+        "https://images.unsplash.com/photo-1447014421976-7fec21d26d86?fit=crop&fm=jpg&h=800&q=100",
+        "https://images.unsplash.com/photo-1446426156356-92b664d86b77?fit=crop&fm=jpg&h=800&q=100",
+        "https://images.unsplash.com/photo-1446071103084-c257b5f70672?fit=crop&fm=jpg&h=800&q=100"
+      ]
     },
     "fantastic-relaunch": {
       "title": "Fantastic Relaunch",
       "slug": "fantastic-relaunch",
       "content": "This is a project I did for fantastic-relaunch.",
       "tags": ["frontend", "ui"],
-      "date": "19/02/2015",
-      "image": "https://images.unsplash.com/photo-1446426156356-92b664d86b77?fit=crop&fm=jpg&h=800&q=100"
+      "date": "06/02/2015",
+      "image": "https://images.unsplash.com/photo-1446426156356-92b664d86b77?fit=crop&fm=jpg&h=800&q=100",
+      "images": [
+        "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?fit=crop&fm=jpg&h=500&w=300&q=100",
+        "https://images.unsplash.com/photo-1447014421976-7fec21d26d86?fit=crop&fm=jpg&h=800&q=100",
+        "https://images.unsplash.com/photo-1446426156356-92b664d86b77?fit=crop&fm=jpg&h=800&q=100",
+        "https://images.unsplash.com/photo-1446071103084-c257b5f70672?fit=crop&fm=jpg&h=800&q=100"
+      ]
     },
     "billboards": {
       "title": "Billboards",
@@ -47,7 +66,14 @@
       "content": "This is a project I did for billboards.",
       "tags": ["ui", "graphic design"],
       "date": "11/11/2014",
-      "image": "https://images.unsplash.com/photo-1446071103084-c257b5f70672?fit=crop&fm=jpg&h=800&q=100"
+      "client": "Billboard",
+      "image": "https://images.unsplash.com/photo-1446071103084-c257b5f70672?fit=crop&fm=jpg&h=800&q=100",
+      "images": [
+        "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?fit=crop&fm=jpg&h=500&w=300&q=100",
+        "https://images.unsplash.com/photo-1447014421976-7fec21d26d86?fit=crop&fm=jpg&h=800&q=100",
+        "https://images.unsplash.com/photo-1446426156356-92b664d86b77?fit=crop&fm=jpg&h=800&q=100",
+        "https://images.unsplash.com/photo-1446071103084-c257b5f70672?fit=crop&fm=jpg&h=800&q=100"
+      ]
     }
   }
 }
