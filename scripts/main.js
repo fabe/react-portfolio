@@ -12,12 +12,21 @@ var History = ReactRouter.History;
 var createBrowserHistory = require('history/lib/createBrowserHistory');
 
 var marked = require('marked');
+var helpers = require('./helpers');
 
 
 /*
   App
 */
 var App = React.createClass({
+  getInitialState: function() {
+    return { tag: "" }
+  },
+  handleTag: function(tag) {
+    this.setState({
+      tag: tag
+    })
+  },
   render: function() {
       return (
         <div className="App">
@@ -25,8 +34,10 @@ var App = React.createClass({
                    tagline={ data.site.tagline }
                    bio={ data.site.bio }
                    pages={ data.pages }
-                   extra={ this.props.params } />
-          { this.props.children || <Work works={ data.works } /> }
+                   works={ data.works }
+                   extra={ this.props.params }
+                   handleTag={ this.handleTag } />
+          { this.props.children || <Work works={ data.works } tag={ this.state.tag } /> }
         </div>
       )
   }
@@ -42,13 +53,14 @@ var Sidebar = React.createClass({
     return (
       <div className="Sidebar">
         <h1>
-          <Link to="/">{ this.props.name }</Link>
+          <Link to="/" onClick={ this.props.handleTag.bind(null, "") }>{ this.props.name }</Link>
         </h1>
         <h3>{ this.props.tagline }</h3>
         <p className="bio">{ this.props.bio }</p>
         <Navigation pages={ this.props.pages } />
         <SidebarInfo extra={ this.props.extra } />
-        <p className="Copyright">Copyright &copy; 2015 Ron Swanson</p>
+        { this.props.children || <SidebarFilter works={ data.works } extra={ this.props.extra } handleTag={ this.props.handleTag } /> }
+        <p className="Copyright">Copyright &copy; 2015 { this.props.name }</p>
       </div>
     )
   }
@@ -82,6 +94,54 @@ var SidebarInfo = React.createClass({
   }
 });
 
+var SidebarFilter = React.createClass({
+  render: function() {
+    if(Object.keys(this.props.extra).length > 0) {
+      return false;
+    }
+
+    var allTags = [];
+
+    Object.keys(this.props.works).map(function(key) {
+      var tempTags = [];
+      tempTags = tempTags.concat(this.props.works[key].tags)
+      allTags = allTags.concat(tempTags).filter(function (v, i, a) { return a.indexOf (v) == i });
+    }.bind(this));
+
+    var tagNodes = allTags.map(function(tag) {
+      return (
+        <SidebarFilterItem key={ helpers.slugify(tag) }
+                           title={ tag } 
+                           slug={ helpers.slugify(tag) }
+                           handleTag={ this.props.handleTag } />
+      )
+    }.bind(this));
+
+    return(
+      <ul className="TagNavigation">
+        <h3>Tags</h3>
+        { tagNodes }
+      </ul>
+    );
+  }
+});
+
+var SidebarFilterItem = React.createClass({
+  mixins : [History],
+  navigate: function(slug) {
+    this.history.pushState(null, slug);
+  },
+  render: function() {
+    return (
+      <li>
+        <a href="#" onClick={ this.props.handleTag.bind(null, this.props.title) }>
+          { this.props.title }
+        </a>
+      </li>
+    )
+  }
+});
+
 
 /*
   Navigation
@@ -92,7 +152,7 @@ var Navigation = React.createClass({
       return (
         <NavigationItem key={ key }
                         title={ this.props.pages[key].title } 
-                        slug={ this.props.pages[key].slug } />
+                        slug={ helpers.slugify(this.props.pages[key].slug) } />
       );
     }.bind(this));
     return (
@@ -111,7 +171,7 @@ var NavigationItem = React.createClass({
   render: function() {
     return (
       <li>
-        <Link to={ '/' + this.props.slug } activeClassName="active">
+        <Link to={ '/' + this.props.slug }>
           { this.props.title }
         </Link>
       </li>
@@ -127,14 +187,20 @@ var NavigationItem = React.createClass({
 var Work = React.createClass({
   render: function() {
     var WorkNodes = Object.keys(this.props.works).map(function(key) {
+      if(this.props.tag != "") {
+        if(this.props.works[key].tags.indexOf(this.props.tag)== -1) {
+          return false;
+        }
+      }     
+      
       var project = this.props.works[key];
       return (
-        <WorkItem key={ key }
-                  title={ project.title } 
-                  image={ project.image }
-                  tags={ project.tags }
-                  slug={ project.slug } />
-      );
+          <WorkItem key={ key }
+                    title={ project.title } 
+                    image={ project.image }
+                    tags={ project.tags }
+                    slug={ project.slug } />
+        );
     }.bind(this));
     return (
       <div className="Work">
@@ -211,9 +277,9 @@ var Default = React.createClass({
 var routes = (
   <Router history={createBrowserHistory()}>
     <Route path="/" component={App}>
-      <Route path="/work/:project" component={WorkSingle} handler={Sidebar} />
+      <Route path="/work/:project" component={WorkSingle} />
       <Redirect from="/work" to="/" />
-      <Route path="/:page" component={Default}/>
+      <Route path="/:page" components={Default}/>
     </Route>
   </Router>
 )
