@@ -8,7 +8,7 @@ var Work = React.createClass({
   handleLayoutEvent: function(e) {
     this.props.changeLayout(e.target.value);
   },
-  handleShuffle: function() {
+  handleShuffleEvent: function() {
     this.props.shuffleShots(1);
   },
   render: function() {
@@ -41,7 +41,7 @@ var Work = React.createClass({
     return (
       <div className="work">
         <div className="controls">
-          <button onClick={ this.handleShuffle }>Shuffle</button>
+          <button onClick={ this.handleShuffleEvent }>Shuffle</button>
           <select value={ this.props.layout } onChange={ this.handleLayoutEvent }>
             <option value="tile">Tile</option>
             <option value="list">List</option>

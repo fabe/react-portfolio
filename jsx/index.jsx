@@ -1,8 +1,8 @@
 // Problems with reading the .json files? Try `ulimit -n 4096`.
 var React = require('react');
-global.jQuery = require('jquery');
+/*global.jQuery = require('jquery');
 var jribbble = require('jribbble');
-var dribbble = jQuery.jribbble;
+var dribbble = jQuery.jribbble;*/
 var _ = require('lodash');
 var data = require('./site');
 var shots = require('./dribbble');
@@ -17,12 +17,12 @@ var App = React.createClass({
     };
   },
   componentDidMount: function() {
-    /* dribbble.setToken('560f36d81a5578ba55181eab2fb35080cd907fc97149a9a49afa3083721ae445');
-    dribbble.teams('facebook').shots().then(function(res) {
+    /*dribbble.setToken('560f36d81a5578ba55181eab2fb35080cd907fc97149a9a49afa3083721ae445');
+    dribbble.teams('instagram').shots().then(function(res) {
       this.setState({
         shots: res
       });
-    }.bind(this)); */
+    }.bind(this));*/
     this.setState({
       shots: shots
     });

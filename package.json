@@ -10,8 +10,11 @@
   "repository": "https://github.com/fabe/react-portfolio",
   "license": "MIT",
   "dependencies": {
+    "babel-core": "^6.3.26",
+    "express": "^4.13.3",
     "jquery": "^2.1.4",
-    "jribbble": "^2.0.4"
+    "jribbble": "^2.0.4",
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "babel-preset-react": "^6.3.13",
