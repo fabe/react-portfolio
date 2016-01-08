@@ -23,21 +23,6 @@ var Work = React.createClass({
       layout = ListLayout;
     }
 
-    var WorkItems = [];
-    _.each(this.props.shots, function(shot) {   
-      WorkItems.push(
-        <WorkItem
-          key={ shot.id }
-          title={ shot.title } 
-          image={ shot.images.normal }
-          description={ shot.description }
-          link={ shot.html_url }
-          likes={ shot.likes_count }
-          layout={ layout }
-        />
-      );
-    });
-
     return (
       <div className="work">
         <div className="controls">
@@ -47,7 +32,19 @@ var Work = React.createClass({
             <option value="list">List</option>
           </select>
         </div>
-        { WorkItems }
+        {this.props.shots.map(function(shot) { 
+          return (
+            <WorkItem
+              key={ shot.id }
+              title={ shot.title } 
+              image={ shot.images.normal }
+              description={ shot.description }
+              link={ shot.html_url }
+              likes={ shot.likes_count }
+              layout={ layout }
+            />
+          );
+        })}
       </div>
     );
   }
