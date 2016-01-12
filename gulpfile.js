@@ -1,78 +1,42 @@
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+var browserify = require('browserify');
+var babelify = require('babelify');
+var rename = require('gulp-rename');
+var buffer = require('vinyl-buffer');
+var source = require('vinyl-source-stream');
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
-var browserify = require('browserify');
-var reactify = require('reactify');
-var webserver = require('gulp-webserver');
 
-var scriptsDir = './scripts';
-var buildDir = './build';
+// Basic usage
+gulp.task('scripts', function() {
+  var entryFile = './jsx/client.jsx';
+  
+  var bundler = browserify(entryFile, {extensions: [ ".js", ".jsx" ]});
 
-/*
-  Styles
-*/
+  bundler.transform(babelify, {presets: "react"});
+
+  bundler.add(entryFile);
+
+  var stream = bundler.bundle();
+  stream.on('error', function (err) { console.error(err.toString()) });
+
+  stream
+    .pipe(source(entryFile))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(rename('index.js'))
+    .pipe(gulp.dest('public/'));
+});
+
 gulp.task('sass', function () {
   gulp.src('./sass/**/*.scss')
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(gulp.dest(buildDir + '/css'));
+    .pipe(gulp.dest('./public/css'));
 });
 
-/*
-  Images
-*/
-gulp.task('images',function(){
-  gulp.src('sass/images/**')
-    .pipe(gulp.dest(buildDir + '/css/images'))
+gulp.task('watch', function() {
+  gulp.watch(['./jsx/**/*'], ['scripts']);
+  gulp.watch('./sass/**/*', ['sass']);
 });
 
-/*
-  Scripts
-*/
-function handleErrors(err) {
-  gutil.log(err.message)
-}
-
-function buildScript(file, watch) {
-  var props = {entries: [scriptsDir + '/' + file]};
-  var bundler = watch ? watchify(props) : browserify(props);
-  bundler.transform(reactify);
-  function rebundle() {
-    var stream = bundler.bundle();
-    return stream.on('error', handleErrors)
-    .pipe(source(file))
-    //.pipe(buffer())
-    //.pipe(uglify())
-    .pipe(gulp.dest(buildDir + '/'))
-  }
-  bundler.on('update', function() {
-    rebundle();
-    gutil.log('Rebundle...');
-  });
-  return rebundle();
-}
-
-gulp.task('build', function() {
-  return buildScript('main.js', false);
-});
-
-/*
-  Server
-*/
-gulp.task('webserver', function() {
-  gulp.src('./')
-    .pipe(webserver({
-      livereload: false,
-      directoryListing: false,
-      open: false,
-      fallback: 'index.html'
-    }));
-});
-
-gulp.task('default', ['images','sass','build','webserver'], function() {
-  gulp.watch('sass/**/*', ['sass']);
-  gulp.watch('scripts/**/*', ['build']);
-  gulp.watch('data/**/*', ['build']);
-});
+gulp.task('default', ['scripts', 'sass', 'watch']);
