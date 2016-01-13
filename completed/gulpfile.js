@@ -25,18 +25,18 @@ gulp.task('scripts', function() {
     .pipe(buffer())
     .pipe(uglify())
     .pipe(rename('index.js'))
-    .pipe(gulp.dest('public/'));
+    .pipe(gulp.dest('./build/'));
 });
 
 gulp.task('sass', function () {
-  gulp.src('./sass/**/*.scss')
+  gulp.src('../sass/**/*.scss')
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(gulp.dest('./public/css'));
+    .pipe(gulp.dest('./build/css/'));
 });
 
 gulp.task('watch', function() {
   gulp.watch(['./jsx/**/*'], ['scripts']);
-  gulp.watch('./sass/**/*', ['sass']);
+  gulp.watch('../sass/**/*', ['sass']);
 });
 
 gulp.task('default', ['scripts', 'sass', 'watch']);
