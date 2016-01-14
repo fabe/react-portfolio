@@ -34,7 +34,7 @@ var Work = React.createClass({
         </div>
         {this.props.shots.map(function(shot) { 
           return (
-            <WorkItem
+            <layout
               key={ shot.id }
               title={ shot.title } 
               image={ shot.images.normal }

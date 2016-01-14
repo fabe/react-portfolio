@@ -157,7 +157,7 @@ button {
     margin-bottom: 30px;
     text-align: center;
 
-    &:nth-child(odd) {
+    &:nth-of-type(even) {
       margin-right: 0;
       clear: right;
     }
