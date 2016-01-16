@@ -236,10 +236,10 @@ var React = require('react');
 var TileLayout = React.createClass({
   render: function() {
     return (
-      <div className="work__item tile">
+      <section className="work__item tile">
         <img src={ this.props.image } />
         <h3>{ this.props.title }</h3>
-      </div>
+      </section>
     )
   }
 });
@@ -288,12 +288,12 @@ var React = require('react');
 var ListLayout = React.createClass({
   render: function() {
     return(
-      <div className="work__item list">
+      <section className="work__item list">
         <img src={ this.props.image } />
         <h2>{ this.props.title }</h2>
         <div>{ this.props.description }</div>
         <p className="likes">{ this.props.likes }</p>
-      </div>
+      </section>
     )
   }
 });
@@ -312,12 +312,12 @@ renderDescription: function() {
 },
 render: function() {
   return(
-    <div className="work__item list">
+    <section className="work__item list">
       <img src={ this.props.image } />
       <h2>{ this.props.title }</h2>
       <div dangerouslySetInnerHTML={ this.renderDescription() } />
       <p className="likes">{ this.props.likes }</p>
-    </div>
+    </section>
   )
 }
 ```

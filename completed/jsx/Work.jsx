@@ -1,23 +1,27 @@
 var React = require('react');
-var _ = require('lodash');
-var WorkItem = require('./WorkItem');
-var ListLayout = require('./ListLayout');
 var TileLayout = require('./TileLayout');
+var ListLayout = require('./ListLayout');
+var WorkItem = require('./WorkItem');
 
 var Work = React.createClass({
-  handleLayoutEvent: function(e) {
-    this.props.changeLayout(e.target.value);
+  handleLayoutEvent: function(event) {
+    this.props.changeLayout(event.target.value);
   },
   handleShuffleEvent: function() {
-    this.props.shuffleShots(1);
+    this.props.shuffle(1);
   },
   render: function() {
-    if (_.size(this.props.shots) === 0) {
-      return <div/>;
+    if(Object.keys(this.props.shots).length === 0) {
+      return (
+        <div className="work">
+          <h3>Loading...</h3>
+        </div>
+      )
     }
 
     var layout;
-    if (this.props.layout === "tile") {
+
+    if(this.props.layout === "tile") {
       layout = TileLayout;
     } else {
       layout = ListLayout;
@@ -32,22 +36,21 @@ var Work = React.createClass({
             <option value="list">List</option>
           </select>
         </div>
-        {this.props.shots.map(function(shot) { 
+        { this.props.shots.map(function(shot) {
           return (
-            <layout
-              key={ shot.id }
-              title={ shot.title } 
+            <WorkItem
               image={ shot.images.normal }
+              title={ shot.title }
               description={ shot.description }
-              link={ shot.html_url }
               likes={ shot.likes_count }
               layout={ layout }
+              key={ shot.id }
             />
-          );
-        })}
+          )
+        }) }
       </div>
-    );
+    )
   }
-});
+})
 
 module.exports = Work;

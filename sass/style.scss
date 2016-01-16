@@ -153,13 +153,11 @@ button {
   .work__item {
     display: inline-block;
     width: 48%;
-    margin-right: 4%;
     margin-bottom: 30px;
     text-align: center;
 
-    &:nth-of-type(even) {
-      margin-right: 0;
-      clear: right;
+    &:nth-of-type(odd) {
+      margin-right: 4%;
     }
 
     &.list { // For ListLayout
