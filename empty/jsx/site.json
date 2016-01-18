@@ -1,7 +1,5 @@
 {
-  "site": {
-    "name": "Ron Swanson",
-    "tagline": "Interface Designer, Frontend Developer",
-    "bio": "Hello, my name is Ron Swanson. Normally I try never to speak with people, but I've been drinking this Snake Juice thing, and it's damn good."
-  }
+  "name": "Ron Swanson",
+  "tagline": "Interface Designer, Frontend Developer",
+  "bio": "Hello, my name is Ron Swanson. Normally I try never to speak with people, but I've been drinking this Snake Juice thing, and it's damn good."
 }

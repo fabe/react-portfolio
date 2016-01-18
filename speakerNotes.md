@@ -305,24 +305,19 @@ This is nothing new, a component that renders some markup with props. Notice tha
 If you look at this in your browser, you can see that the description contains HTML markup. That's because React doesn't like rendering HTML from strings, because it could be a security issue. We'll need to make some rather ugly workarounds that allows us to render that HTML.
 
 ```javascript
-renderDescription: function() {
-  return {
-    __html: this.props.description
-  }
-},
 render: function() {
   return(
     <section className="work__item list">
       <img src={ this.props.image } />
       <h2>{ this.props.title }</h2>
-      <div dangerouslySetInnerHTML={ this.renderDescription() } />
+      <div dangerouslySetInnerHTML={ { __html: this.props.description } } />
       <p className="likes">{ this.props.likes }</p>
     </section>
   )
 }
 ```
 
-React really wants to make it hard for developers to make this work. What happened? Instead of simply rendering `this.props.description`, we have to put that part in a method and call it in a props called `dangerouslySetInnerHTML`. This method needs to `return` an object with the key `__html`.
+React really wants to make it hard for developers to make this work. What happened? Instead of simply rendering `this.props.description`, we have to put that part in a method and call it in a props called `dangerouslySetInnerHTML`. This method needs to return an object with the key `__html`.
 
 Once you've used this once or twice, this won't be as complicated to you as before. If this really upsets you, [read more about it in the official documentation](https://facebook.github.io/react/tips/dangerously-set-inner-html.html).
 
@@ -514,7 +509,7 @@ Childs play, you say? Now we will look into using a real API/backend for our Rea
 ### jsx/index.jsx
 ```javascript
 // start at the top
-global.jQuery = require('jquery');
+window.jQuery = require('jquery');
 var jribbble = require('jribbble');
 // end at the top
 
