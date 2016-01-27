@@ -63,7 +63,7 @@ If you reload your browser, you won't see any changes. That's because the compon
 ### jsx/index.jsx
 ```javascript
 // start add at the top
-var shots = require('./sample-api');
+var data = require('./sample-api');
 // end add at the top
 
 // start state method (above render)
@@ -530,7 +530,7 @@ var jribbble = require('jribbble');
 // start state method
 getInitialState: function() {
   return {
-    shots: {},
+    shots: false,
     site: site,
     layout: "tile"
   }
@@ -559,14 +559,18 @@ componentDidMount: function() {
 ### jsx/Work.jsx
 ```javascript
 render: function() {
-  if (Object.keys(this.props.shots).length) === 0) {
-    return <p>Loading</p>;
+  if( !this.props.shots ) {
+    return(
+      <div className="work">
+        <h3>Loading...</h3>
+      </div>
+    );
   }
   
   // and so on...
 });
 ```
-- You'll notice that the API call doesn't work yet. Actually, our whole React app crashes. That's because before the API call was made, React tries to render our components with the empty `shots` object. We need to make sure nothing, or in this case a loading message, is rendered. As soon as the API call was successfully made, we swap out the empty object for the real data and render again.
+- You'll notice that the API call doesn't work yet. Actually, our whole React app crashes. That's because before the API call was made, React tries to render our components with the non-exsiting `shots` object. We need to make sure nothing, or in this case a loading message, is rendered if the shots are not loaded in yet. As soon as the API call was successfully made, we swap out the `false` value for the real data and render again.
 
 ## Wrapping up
 Okay, that's all I've got. You now have a neat little portfolio with a Dribbble integration, and the best, it's static! Now you could upload the `index.html` and the `build/` folder to your server, that's all there's left!
