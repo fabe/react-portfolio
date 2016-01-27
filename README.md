@@ -10,4 +10,4 @@ A workshop for ReactJS.
 6. `cd` into the empty/ directory.
 7. `gulp` or `../node_modules/.bin/gulp`.
 8. Open up `empty/index.html` in your browser.
-9. You might want a syntax highlighter for JSX/Babel. Do so by installing the [language-babel package](https://atom.io/packages/language-babel) from the Atom interface and select *Javascript (Babel)* at the lower left corner of Atom in your JSX files.
+9. You might want a syntax highlighter for JSX/Babel. Do so by installing the [react package](https://atom.io/packages/react) from the Atom interface or via `apm install react`.
