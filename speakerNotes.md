@@ -8,16 +8,16 @@ Gulp is a big topic and actually a workshop on its own. Gulp is a tool, or build
 ### sass/, css/ and index.html
 This is nothing special. Since we'll this is not a CSS workshop, I already set up some CSS for you. If you want to edit it, browse into the `sass/` directory and edit the `style.scss` file. Make sure gulp is running! The `index.html` file only pulls in a stylesheet and our compiled Javascript, so nothing new or exciting here.
 
-### site.json & dribbble.json
-This is just dummy data. `dribbble.json` is from an actual [Dribbble API](http://developer.dribbble.com/v1/) request, `site.json` is for things like site title and description. Later we'll cover how to request the Dribbble API.
+### site.json & sample-data.json
+This is just dummy data. `sample-data.json` is from an actual [Dribbble API](http://developer.dribbble.com/v1/) request, `site.json` is for things like site title and description. Later we'll cover how to request the Dribbble API.
 
 ### Also
 During the workshop, you will not be required to create new files, all of that is set up in the `empty/` directory. Feel free to take a quick look inside the `completed/` directory every now and then, if you need to.
 
 ## Getting started
-First things first, after cloning the repo you will have to [install Node.js](https://nodejs.org/en/). Go for the stable one. Then, `cd` into the cloned repository and do an `npm install`. This will install all of our dependencies. After that, do `cd empty/` and start `gulp`. If your machine doesn't find that command, try `../node_modules/.bin/gulp`.
+First things first, after cloning the repo you will have to [install Node.js](https://nodejs.org/en/). Go for the stable one. Then, `cd` into the cloned repository and do an `npm install`. This will install all of our dependencies. After that, do `npm start` to start the workshop!
 
-We won't be setting up a http server for now. It is enough to open the `index.html` file in the browser of your choice. Of course, you can extend the `gulpfile.js` to set up a server, or use the command `python -m SimpleHTTPServer`.
+I also suggest you to install the [Atom React Plugin](https://orktes.github.io/atom-react/), which will give you the correct syntax highlighting and makes development less complex.
 
 In any case, you should end up with a white page that says "not rendered :(". If you see that, it's high time to render something!
 
@@ -41,7 +41,7 @@ This is pretty much the most basic React code you can get. This is how you creat
 - We need to require React before using it. After this workshop you will know the ins and outs of requiring modules.
 - Every components needs to have a render method, which returns either another component or a React element (JSX, HTML).
 - You cannot render two seperate elements (let's say two seperate divs). They always have to be wrapped in one parent element.
-- We export the `App` component (or module) at the end of the file. We'll do that for every component that follows.
+- We export the `App` component (or module) at the end of the file. We'll do that for every component that follows, so that we can import that component whenever we need it at other places.
 
 ### jsx/client.jsx
 ```javascript
@@ -63,7 +63,7 @@ If you reload your browser, you won't see any changes. That's because the compon
 ### jsx/index.jsx
 ```javascript
 // start add at the top
-var shots = require('./dribbble');
+var shots = require('./sample-api');
 // end add at the top
 
 // start state method (above render)
@@ -76,12 +76,15 @@ getInitialState: function() {
 
 // start render method
 render: function() {
+  var shotData = this.state.shots.map(function(shot) {
+    return (
+      <h1>{ shot.data }</h1>
+    );
+  });
   return (
     <div className="app">
       <div className="work">
-    	{ this.state.shots.map(function(shot) {
-    	  return <h1>{ shot.title }</h1>
-    	}) }
+    	{ shotData }
       </div>
     </div>
   )
@@ -107,8 +110,8 @@ var Sidebar = React.createClass({
       <div className="sidebar">
         <h1>Ron Swanson</h1>
         <h3>Interface Designer, Frontend Developer</h3>
-        <p className="sidebar__bio">Hello, my name is Ron Swanson. Normally I try never to speak with people, but I've been drinking this Snake Juice thing, and it's damn good.</p>
-        <p className="sidebar__copyright">Copyright &copy; 2015 Ron Swanson</p>
+        <p className="sidebar-bio">Hello, my name is Ron Swanson. Normally I try never to speak with people, but I've been drinking this Snake Juice thing, and it's damn good.</p>
+        <p className="sidebar-copyright">Copyright &copy; 2015 Ron Swanson</p>
       </div>
     )
   }
@@ -140,6 +143,11 @@ getInitialState: function() {
 
 // start render method
 render: function() {
+  var shotData = this.state.shots.map(function(shot) {
+    return (
+      <h1>{ shot.data }</h1>
+    );
+  });
   return (
     <div className="app">
       <Sidebar
@@ -148,9 +156,7 @@ render: function() {
         bio={ this.state.site.bio }
       />
       <div className="work">
-    	{ this.state.shots.map(function(shot) {
-    	  return <h1>{ shot.title }</h1>
-    	}) }
+        { shotData }
       </div>
     </div>
   )
@@ -170,8 +176,8 @@ render: function() {
     <div className="sidebar">
       <h1>{ this.props.name }</h1>
       <h3>{ this.props.tagline }</h3>
-      <p className="sidebar__bio">{ this.props.bio }</p>
-      <p className="sidebar__copyright">Copyright &copy; 2015 { this.props.name }</p>
+      <p className="sidebar-bio">{ this.props.bio }</p>
+      <p className="sidebar-copyright">Copyright &copy; 2015 { this.props.name }</p>
     </div>
   )
 }
@@ -185,11 +191,14 @@ var React = require('react');
 
 var Work = React.createClass({
   render: function() {
+    var shotData = this.props.shots.map(function(shot) {
+      return (
+        <h1>{ shot.data }</h1>
+      );
+    });
     return (
       <div className="work">
-        { this.props.shots.map(function(shot) {
-          return <h1>{ shot.title }</h1>
-        }) }
+        { shotData }
       </div>
     )
   }
@@ -236,7 +245,7 @@ var React = require('react');
 var TileLayout = React.createClass({
   render: function() {
     return (
-      <section className="work__item tile">
+      <section className="work-item tile">
         <img src={ this.props.image } />
         <h3>{ this.props.title }</h3>
       </section>
@@ -258,16 +267,18 @@ var TileLayout = require('./TileLayout');
 
 // start render method
 render: function() {
+  var shotData = this.props.shots.map(function(shot) {
+    return (
+      <TileLayout
+        title={ shot.title }
+        image={ shot.images.normal }
+        key={ shot.id }
+      />
+    );
+  });
   return (
     <div className="work">
-      { this.props.shots.map(function(shot) {
-        return (
-          <TileLayout
-            title={ shot.title }
-            image={ shot.images.normal }
-            key={ shot.id }
-          />
-      }) }
+      { shotData }
     </div>
   )
 }
@@ -288,7 +299,7 @@ var React = require('react');
 var ListLayout = React.createClass({
   render: function() {
     return(
-      <section className="work__item list">
+      <section className="work-item list">
         <img src={ this.props.image } />
         <h2>{ this.props.title }</h2>
         <div>{ this.props.description }</div>
@@ -307,7 +318,7 @@ If you look at this in your browser, you can see that the description contains H
 ```javascript
 render: function() {
   return(
-    <section className="work__item list">
+    <section className="work-item list">
       <img src={ this.props.image } />
       <h2>{ this.props.title }</h2>
       <div dangerouslySetInnerHTML={ { __html: this.props.description } } />
@@ -335,6 +346,15 @@ handleLayoutEvent: function(event) {
 
 // start render method
 render: function() {
+  var shotData = this.props.shots.map(function(shot) {
+    return (
+      <TileLayout
+        title={ shot.title }
+        image={ shot.images.normal }
+        key={ shot.id }
+      />
+    );
+  });
   return (
     <div className="work">
       <div className="controls">
@@ -343,16 +363,7 @@ render: function() {
           <option value="list">List</option>
         </select>
       </div>
-      { this.props.shots.map(function(shot) {
-        return (
-          <ListLayout
-            title={ shot.title }
-            image={ shot.images.normal }
-            key={ shot.id }
-            description={ shot.description }
-            likes={ shot.likes_count }
-          />
-      }) }
+      { shotData }
     </div>
   )
 }
@@ -455,7 +466,20 @@ render: function() {
   } else {
     layout = ListLayout;
   }
-    
+  
+  var shotData = this.props.shots.map(function(shot) {
+    return (
+      <WorkItem
+        title={ shot.title }
+        image={ shot.images.normal }
+        key={ shot.id }
+        description={ shot.description }
+        likes={ shot.likes_count }
+        layout={ layout }
+      />
+    );
+  });
+  
   return (
     <div className="work">
       <div className="controls">
@@ -464,17 +488,7 @@ render: function() {
           <option value="list">List</option>
         </select>
       </div>
-      { this.props.shots.map(function(shot) {
-        return (
-          <WorkItem
-            title={ shot.title }
-            image={ shot.images.normal }
-            key={ shot.id }
-            description={ shot.description }
-            likes={ shot.likes_count }
-            layout={ layout }
-          />
-      }) }
+      { shotData }
     </div>
   )
 }

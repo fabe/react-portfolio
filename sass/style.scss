@@ -116,13 +116,13 @@ button {
 .sidebar {
   float: left;
   width: $sidebar-width;
-  
-  .sidebar__bio {
+
+  .sidebar-bio {
     margin-top: 30px;
     margin-bottom: 0;
   }
 
-  .sidebar__info {
+  .sidebar-info {
     margin-top: 30px;
     padding-top: 30px;
     border-top: 1px solid $border;
@@ -132,7 +132,7 @@ button {
     }
   }
 
-  .sidebar__copyright {
+  .sidebar-copyright {
     margin-top: 30px;
     padding-top: 30px;
     border-top: 1px solid $border;
@@ -150,7 +150,7 @@ button {
   padding-left: 60px;
   max-width: $content-width - $sidebar-width;
 
-  .work__item {
+  .work-item {
     display: inline-block;
     width: 48%;
     margin-bottom: 30px;
@@ -199,7 +199,7 @@ button {
 .controls {
   display: block;
   margin-top: 10px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 
   button {
     float: left;
