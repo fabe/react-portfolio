@@ -6,11 +6,11 @@ var Sidebar = React.createClass({
       <div className="sidebar">
         <h1>{ this.props.name }</h1>
         <h3>{ this.props.tagline }</h3>
-        <p className="sidebar__bio">{ this.props.bio }</p>
-        <p className="sidebar__copyright">Copyright &copy; 2015 { this.props.name }</p>
+        <p className="sidebar-bio">{ this.props.bio }</p>
+        <p className="sidebar-copyright">Copyright 2016 { this.props.name }</p>
       </div>
-    )
+    );
   }
-});
+})
 
 module.exports = Sidebar;

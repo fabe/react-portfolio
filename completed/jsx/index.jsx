@@ -1,11 +1,9 @@
 // Problems with reading the .json files? Try `ulimit -n 4096`.
 
 var React = require('react');
-global.jQuery = require('jquery');
+window.jQuery = require('jquery');
 var jribbble = require('jribbble');
-var _ = require('lodash');
-var dribbble = jQuery.jribbble;
-var shots = require('./dribbble');
+var data = require('./sample-api');
 var site = require('./site');
 var Sidebar = require('./Sidebar');
 var Work = require('./Work');
@@ -13,28 +11,23 @@ var Work = require('./Work');
 var App = React.createClass({
   getInitialState: function() {
     return {
-      shots: {},
+      shots: false,
       site: site,
       layout: "tile"
     }
   },
+  componentDidMount: function() {
+    jQuery.jribbble.setToken('560f36d81a5578ba55181eab2fb35080cd907fc97149a9a49afa3083721ae445');
+    jQuery.jribbble.teams('instagram').shots().then(function(res) {
+      this.setState({
+        shots: res
+      });
+    }.bind(this));
+  },
   changeLayout: function(layout) {
     this.setState({
       layout: layout
-    })
-  },
-  shuffle: function() {
-    this.setState({
-      shots: _.shuffle(this.state.shots)
-    })
-  },
-  componentDidMount: function() {
-    dribbble.setToken('560f36d81a5578ba55181eab2fb35080cd907fc97149a9a49afa3083721ae445');
-    dribbble.users('rokis').shots().then(function(shots) {
-      this.setState({
-        shots: shots
-      })
-    }.bind(this));
+    });
   },
   render: function() {
     return (
@@ -45,13 +38,12 @@ var App = React.createClass({
           bio={ this.state.site.bio }
         />
         <Work
-          shots={ this.state.shots }
+          shots={ this.state.shots }
           layout={ this.state.layout }
           changeLayout={ this.changeLayout }
-          shuffle={ this.shuffle }
         />
       </div>
-    )
+    );
   }
 });
 
