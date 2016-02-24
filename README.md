@@ -1,5 +1,5 @@
 # react-portfolio
-A workshop for ReactJS.
+A workshop for ReactJS. Find the step by step tutorial in the [speakerNotes.md](https://github.com/fabe/react-portfolio/blob/master/speakerNotes.md).
 
 ## What exactly do I have to do?
 1. Download/clone the repository (zip/git).
