@@ -2,11 +2,14 @@ var gulp = require('gulp');
 var browserify = require('browserify');
 var babelify = require('babelify');
 var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
 var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var sass = require('gulp-sass');
 var browserSync = require('browser-sync');
 var notify = require('gulp-notify');
 var eslint = require('gulp-eslint');
+var sourcemaps = require('gulp-sourcemaps');
 
 // Scripts (JSX to JS)
 gulp.task('scripts', function() {
@@ -31,9 +34,19 @@ gulp.task('scripts', function() {
 
   // Pack our scripts together and get them ready
   stream
+    .on('error', function(err) {
+      console.log(err.toString());
+      this.emit('end');
+    })
     .pipe(source(entryFile))
     .pipe(rename('index.js'))
-    .pipe(gulp.dest('./build/'));
+    .pipe(buffer())
+    .pipe(sourcemaps.init({
+      loadMaps: true
+    }))
+    .pipe(uglify({compress: true, mangle: true}))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./build/'))
 });
 
 // SASS to CSS (not important to this workshop)

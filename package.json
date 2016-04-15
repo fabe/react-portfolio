@@ -25,10 +25,13 @@
     "gulp-notify": "^2.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.3",
     "jquery": "^2.1.4",
     "jribbble": "^2.0.4",
     "react": "^0.14.5",
     "react-dom": "^0.14.5",
+    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }
 }
